@@ -1,2 +1,6 @@
 [workspace]
+resolver = "2"
 members = ["checkers-app", "checkers"]
+
+[workspace.dependencies]
+bevy = "0.14.2"

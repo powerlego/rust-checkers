@@ -1,12 +1,9 @@
 use bevy::prelude::*;
+mod board;
 
-const COORDINATE_SIZE: f32 = 256.0;
+pub use board::board_setup;
 
-#[derive(Component)]
-struct Position {
-    pub x: f32,
-    pub y: f32,
-}
+pub const COORDINATE_SIZE: f32 = 256.0;
 
 #[derive(Component)]
 enum CheckerColor {
@@ -15,11 +12,8 @@ enum CheckerColor {
 }
 
 #[derive(Component)]
-struct Checker;
-
-#[derive(Component)]
-struct Board {
-    pub grid: [[Option<Entity>; 8]; 8],
+struct Checker {
+    pub position: Vec2,
 }
 
 #[derive(Component)]
@@ -30,31 +24,15 @@ enum Piece {
 
 pub fn camera_setup(mut commands: Commands) {
     commands.spawn((
-        Camera {
-            clear_color: ClearColorConfig::Custom(Color::Srgba(Srgba::BLUE)),
-            ..Default::default()
-        },
+        Camera::default(),
         Camera2d,
         OrthographicProjection {
             scaling_mode: bevy::render::camera::ScalingMode::AutoMin {
                 min_width:  COORDINATE_SIZE,
-                min_height: COORDINATE_SIZE
+                min_height: COORDINATE_SIZE,
             },
             ..OrthographicProjection::default_2d()
         },
-    ));
-}
-
-pub fn board_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn((
-        Board {
-            grid: [[None; 8]; 8],
-
-        },
-        Sprite {
-            custom_size: Some(Vec2::new(COORDINATE_SIZE*0.9, COORDINATE_SIZE*0.9)),
-            ..Default::default()
-        }
     ));
 }
 

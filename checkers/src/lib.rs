@@ -1,27 +1,29 @@
 use bevy::prelude::*;
 
+const COORDINATE_SIZE: f32 = 256.0;
+
 #[derive(Component)]
-pub struct Position {
+struct Position {
     pub x: f32,
     pub y: f32,
 }
 
 #[derive(Component)]
-pub enum CheckerColor {
+enum CheckerColor {
     Black,
     Red,
 }
 
 #[derive(Component)]
-pub struct Checker;
+struct Checker;
 
 #[derive(Component)]
-pub struct Board {
+struct Board {
     pub grid: [[Option<Entity>; 8]; 8],
 }
 
 #[derive(Component)]
-pub enum Piece {
+enum Piece {
     King,
     Regular,
 }
@@ -35,11 +37,24 @@ pub fn camera_setup(mut commands: Commands) {
         Camera2d,
         OrthographicProjection {
             scaling_mode: bevy::render::camera::ScalingMode::AutoMin {
-                min_width:  128.0,
-                min_height: 128.0,
+                min_width:  COORDINATE_SIZE,
+                min_height: COORDINATE_SIZE
             },
             ..OrthographicProjection::default_2d()
         },
+    ));
+}
+
+pub fn board_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands.spawn((
+        Board {
+            grid: [[None; 8]; 8],
+
+        },
+        Sprite {
+            custom_size: Some(Vec2::new(COORDINATE_SIZE*0.9, COORDINATE_SIZE*0.9)),
+            ..Default::default()
+        }
     ));
 }
 

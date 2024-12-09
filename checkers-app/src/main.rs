@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use checkers::camera_setup;
+use checkers::{board_setup, camera_setup};
 
 fn main() {
     App::new()
@@ -17,6 +17,6 @@ fn main() {
                 })
                 .build(),
         )
-        .add_systems(Startup, camera_setup)
+        .add_systems(Startup, (camera_setup, board_setup))
         .run();
 }

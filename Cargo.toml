@@ -3,4 +3,10 @@ resolver = "2"
 members = ["checkers-app", "checkers"]
 
 [workspace.dependencies]
-bevy = "0.14.2"
+bevy = {version = "0.15.0", features=["dynamic_linking"]}
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3

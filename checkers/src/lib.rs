@@ -1,26 +1,11 @@
 use bevy::prelude::*;
 mod board;
+mod checker;
 
 pub use board::board_setup;
+pub use checker::spawn_checkers;
 
 pub const COORDINATE_SIZE: f32 = 256.0;
-
-#[derive(Component)]
-enum CheckerColor {
-    Black,
-    Red,
-}
-
-#[derive(Component)]
-struct Checker {
-    pub position: Vec2,
-}
-
-#[derive(Component)]
-enum Piece {
-    King,
-    Regular,
-}
 
 pub fn camera_setup(mut commands: Commands) {
     commands.spawn((

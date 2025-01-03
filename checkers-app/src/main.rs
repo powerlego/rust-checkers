@@ -1,5 +1,7 @@
 use bevy::prelude::*;
-use checkers::{board_setup, camera_setup,spawn_checkers};
+use checkers::{
+    board_setup, camera_setup, render_bounding, spawn_checkers, update_volumes,
+};
 
 fn main() {
     App::new()
@@ -17,6 +19,11 @@ fn main() {
                 })
                 .build(),
         )
-        .add_systems(Startup, (camera_setup, board_setup, spawn_checkers.after(board_setup)))
+        .add_systems(
+            Startup,
+            (camera_setup, board_setup, spawn_checkers.after(board_setup)),
+        )
+        .add_systems(Update, (update_volumes,))
+        .add_systems(PostUpdate, (render_bounding).chain())
         .run();
 }

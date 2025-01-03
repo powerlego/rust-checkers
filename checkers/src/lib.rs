@@ -1,9 +1,10 @@
 use bevy::prelude::*;
 mod board;
 mod checker;
+mod game;
 
 pub use board::board_setup;
-pub use checker::spawn_checkers;
+pub use checker::{render_bounding, spawn_checkers, update_volumes};
 
 pub const COORDINATE_SIZE: f32 = 256.0;
 

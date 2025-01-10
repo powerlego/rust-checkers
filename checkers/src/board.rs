@@ -34,9 +34,7 @@ pub fn board_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         },
         Sprite {
             image,
-            custom_size: Some(Vec2::new(
-                BOARD_SIZE, BOARD_SIZE,
-            )),
+            custom_size: Some(Vec2::new(BOARD_SIZE, BOARD_SIZE)),
             ..Default::default()
         },
     ));

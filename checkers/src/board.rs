@@ -11,7 +11,6 @@ pub const TILE_SIZE: f32 = ((BOARD_SPRITE_SIZE - BORDER_SPRITE_SIZE * 2.0)
 
 #[derive(Component)]
 pub struct Board {
-    pub grid:             [[Option<Entity>; 8]; 8],
     pub grid_coordinates: [[Vec2; 8]; 8],
 }
 
@@ -28,10 +27,7 @@ pub fn board_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     }
 
     commands.spawn((
-        Board {
-            grid: [[None; 8]; 8],
-            grid_coordinates,
-        },
+        Board { grid_coordinates },
         Sprite {
             image,
             custom_size: Some(Vec2::new(BOARD_SIZE, BOARD_SIZE)),

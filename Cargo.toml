@@ -1,9 +1,10 @@
 [workspace]
 resolver = "2"
-members = ["checkers-app", "checkers"]
+members = ["checkers-app", "checkers", "checkers-impl"]
 
 [workspace.dependencies]
-bevy = {version = "0.15.0", features=["dynamic_linking"]}
+bevy = { version = "0.15.0", features = ["dynamic_linking"] }
+checkers-impl = { path = "checkers-impl" }
 
 [profile.dev]
 opt-level = 1

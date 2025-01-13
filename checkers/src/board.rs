@@ -1,6 +1,5 @@
 use bevy::color::palettes::css;
 use bevy::math::bounding::{Bounded2d, BoundingVolume};
-use bevy::math::VectorSpace;
 use bevy::prelude::*;
 
 use crate::mouse::DropZone;
@@ -12,6 +11,15 @@ const BOARD_SIZE: f32 = COORDINATE_SIZE * 0.95;
 pub const TILE_SIZE: f32 = ((BOARD_SPRITE_SIZE - BORDER_SPRITE_SIZE * 2.0)
     / 8.0)
     * (BOARD_SIZE / BOARD_SPRITE_SIZE);
+
+pub struct BoardPlugin;
+
+impl Plugin for BoardPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(Startup, board_setup)
+            .add_systems(PostUpdate, render_tile_bounding);
+    }
+}
 
 #[derive(Component)]
 pub struct Board {
@@ -103,7 +111,7 @@ pub fn board_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     }
 }
 
-pub fn render_tile_bounding(
+fn render_tile_bounding(
     mut gizmos: Gizmos,
     query: Query<&CurrentVolume, With<Tile>>,
 ) {

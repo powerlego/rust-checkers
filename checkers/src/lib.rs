@@ -1,25 +1,32 @@
+use bevy::math::bounding::Aabb2d;
 use bevy::prelude::*;
 mod board;
+mod camera;
 mod checker;
 mod game;
-
-pub use board::board_setup;
-pub use checker::{render_bounding, spawn_checkers, update_volumes};
+mod mouse;
 
 pub const COORDINATE_SIZE: f32 = 256.0;
 
-pub fn camera_setup(mut commands: Commands) {
-    commands.spawn((
-        Camera::default(),
-        Camera2d,
-        OrthographicProjection {
-            scaling_mode: bevy::render::camera::ScalingMode::AutoMin {
-                min_width:  COORDINATE_SIZE,
-                min_height: COORDINATE_SIZE,
-            },
-            ..OrthographicProjection::default_2d()
-        },
-    ));
+#[derive(Component)]
+pub enum Shape {
+    Circle(Circle),
+    Rectangle(Rectangle),
+}
+
+#[derive(Component)]
+pub struct CurrentVolume(Aabb2d);
+
+pub struct GamePlugin;
+
+impl Plugin for GamePlugin {
+    fn build(&self, app: &mut App) {
+        app.add_plugins((
+            camera::CameraPlugin,
+            board::BoardPlugin,
+            checker::CheckerPlugin,
+        ));
+    }
 }
 
 #[cfg(test)]

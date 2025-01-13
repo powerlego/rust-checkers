@@ -1,11 +1,9 @@
 use bevy::prelude::*;
-use checkers::{
-    board_setup, camera_setup, render_bounding, spawn_checkers, update_volumes,
-};
+use checkers::GamePlugin;
 
 fn main() {
     App::new()
-        .add_plugins(
+        .add_plugins((
             DefaultPlugins
                 .set(ImagePlugin::default_nearest())
                 .set(WindowPlugin {
@@ -18,12 +16,7 @@ fn main() {
                     ..Default::default()
                 })
                 .build(),
-        )
-        .add_systems(
-            Startup,
-            (camera_setup, board_setup, spawn_checkers.after(board_setup)),
-        )
-        .add_systems(Update, (update_volumes,))
-        .add_systems(PostUpdate, (render_bounding).chain())
+            GamePlugin,
+        ))
         .run();
 }
